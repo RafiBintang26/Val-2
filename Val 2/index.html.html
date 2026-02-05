@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Music Card</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background:#7b0d0d;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+
+.container{
+  text-align:center;
+  width:320px;
+}
+
+/* TEXT ATAS */
+.top-text{
+  font-size:14px;
+  margin-bottom:20px;
+  font-style:italic;
+}
+
+/* ALBUM */
+.album-wrapper{
+  position:relative;
+  width:260px;
+  margin:0 auto 30px;
+}
+
+.album-cover{
+  width:260px;
+  height:260px;
+  background:#b30000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:2;
+}
+
+.album-cover img{
+  width:85%;
+  height:85%;
+  object-fit:cover;
+}
+
+.album-text{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:85%;
+  font-size:13px;
+  font-weight:bold;
+}
+
+/* VINYL */
+.vinyl{
+  position:absolute;
+  right:-60px;
+  top:15px;
+  width:200px;
+  height:200px;
+  background:radial-gradient(circle, #111 30%, #333 31%, #111 60%);
+  border-radius:50%;
+  animation:spin 6s linear infinite;
+  animation-play-state:paused;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+/* PLAYER */
+.player{
+  background:white;
+  border-radius:6px;
+  padding:10px;
+  color:black;
+  text-align:left;
+}
+
+.player-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.play-btn{
+  width:40px;
+  height:40px;
+  background:#ff5500;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.track-info{
+  font-size:13px;
+}
+
+.progress{
+  height:4px;
+  background:#ddd;
+  margin-top:8px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#ff5500;
+}
+
+/* ARROW */
+.arrow{
+  margin:25px auto 0;
+  width:55px;
+  height:55px;
+  background:white;
+  color:#7b0d0d;
+  border-radius:50%;
+  font-size:28px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  animation:bounce 1.5s infinite;
+  box-shadow:0 6px 15px rgba(0,0,0,0.3);
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(8px);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="top-text">
+    Sebelum mulai, kamu play dulu yaa lagunya!
+  </div>
+
+  <div class="album-wrapper">
+    <div class="vinyl" id="vinyl"></div>
+
+    <div class="album-cover">
+      <img src="cover.jpg" alt="album">
+      <div class="album-text">
+      </div>
+    </div>
+  </div>
+
+  <div class="player">
+    <div class="player-header">
+      <div class="play-btn" id="btn">▶</div>
+      <div class="track-info">
+        <strong>KOPET MIRIP MONYET</strong><br>
+        WKWKWK
+      </div>
+    </div>
+    <div class="progress">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+  </div>
+
+  <div class="arrow" id="arrow">➜</div>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="audio">
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("audio");
+const btn = document.getElementById("btn");
+const progress = document.getElementById("progress");
+const vinyl = document.getElementById("vinyl");
+const arrow = document.getElementById("arrow");
+
+/* PLAY / PAUSE */
+btn.onclick = () => {
+  if(audio.paused){
+    audio.play();
+    btn.innerHTML = "❚❚";
+    vinyl.style.animationPlayState = "running";
+  } else {
+    audio.pause();
+    btn.innerHTML = "▶";
+    vinyl.style.animationPlayState = "paused";
+  }
+};
+
+/* AUTO PLAY VIA ARROW */
+arrow.onclick = () => {
+  audio.play();
+  btn.innerHTML = "❚❚";
+  vinyl.style.animationPlayState = "running";
+  arrow.style.display = "none";
+};
+
+/* PROGRESS */
+audio.addEventListener("timeupdate", () => {
+  const percent = (audio.currentTime / audio.duration) * 100;
+  progress.style.width = percent + "%";
+});
+
+/* RESET */
+audio.addEventListener("ended", () => {
+  btn.innerHTML = "▶";
+  vinyl.style.animationPlayState = "paused";
+  progress.style.width = "0%";
+  arrow.style.display = "flex";
+});
+</script>
+
+</body>
+</html>
