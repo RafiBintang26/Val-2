@@ -145,6 +145,7 @@ body{
   cursor:pointer;
   animation:bounce 1.5s infinite;
   box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  text-decoration:none;
 }
 
 @keyframes bounce{
@@ -167,8 +168,7 @@ body{
 
     <div class="album-cover">
       <img src="cover.jpg" alt="album">
-      <div class="album-text">
-      </div>
+      <div class="album-text"></div>
     </div>
   </div>
 
@@ -176,8 +176,8 @@ body{
     <div class="player-header">
       <div class="play-btn" id="btn">▶</div>
       <div class="track-info">
-        <strong>KOPET MIRIP MONYET</strong><br>
-        WKWKWK
+        <strong>Kota ini tak sama tanpa mu 💗</strong><br>
+       I LOVEEE U 💗💗💗💗
       </div>
     </div>
     <div class="progress">
@@ -185,11 +185,11 @@ body{
     </div>
   </div>
 
-  <div class="arrow" id="arrow">➜</div>
+  <!-- ARROW = NEXT WEB SAJA -->
+  <a href="https://val-3.vercel.app/" class="arrow">➜</a>
 
 </div>
 
-<!-- AUDIO -->
 <audio id="audio">
   <source src="lagu.mp3" type="audio/mpeg">
 </audio>
@@ -199,7 +199,6 @@ const audio = document.getElementById("audio");
 const btn = document.getElementById("btn");
 const progress = document.getElementById("progress");
 const vinyl = document.getElementById("vinyl");
-const arrow = document.getElementById("arrow");
 
 /* PLAY / PAUSE */
 btn.onclick = () => {
@@ -214,26 +213,10 @@ btn.onclick = () => {
   }
 };
 
-/* AUTO PLAY VIA ARROW */
-arrow.onclick = () => {
-  audio.play();
-  btn.innerHTML = "❚❚";
-  vinyl.style.animationPlayState = "running";
-  arrow.style.display = "none";
-};
-
-/* PROGRESS */
+/* PROGRESS BAR */
 audio.addEventListener("timeupdate", () => {
   const percent = (audio.currentTime / audio.duration) * 100;
   progress.style.width = percent + "%";
-});
-
-/* RESET */
-audio.addEventListener("ended", () => {
-  btn.innerHTML = "▶";
-  vinyl.style.animationPlayState = "paused";
-  progress.style.width = "0%";
-  arrow.style.display = "flex";
 });
 </script>
 
